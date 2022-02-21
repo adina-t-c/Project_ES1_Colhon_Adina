@@ -22,7 +22,7 @@ int *message;
 Mutex mma_access;
 volatile bool mess_flg = false;
 
-void led_thread(void const *argument)
+void led_thread()
 {
     while (true) {
         ledR = 0;
@@ -40,7 +40,7 @@ void led_thread(void const *argument)
     }
 }
 
-void mma_repeat(void const *argument) {
+void mma_repeat() {
     while (true) {
         if(mess_flg) {
             mma_access.lock();
@@ -93,13 +93,17 @@ void recorder_task() {
     }
 }
 
+Thread thread_mma;
+Thread thread_led;
+Thread thread_rec;
+
 int main()
 {
     pc.attach(serial_read);
     mma.mmaInit();
-    Thread thread_mma(mma_repeat);
-    Thread thread_led(led_thread);
-    Thread thread_rec(recorder_task);
+    thread_mma.start(mma_repeat);
+    thread_led.start(led_thread);
+    thread_rec.start(recorder_task);
     
 
     while (true) {
