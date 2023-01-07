@@ -15,8 +15,6 @@
 
 #define WHOAMI 0x1A
 
-#define UINT14_MAX        16383
-
 MMAUnit::MMAUnit(I2C* i2c) {
     this->i2c = i2c;
 }

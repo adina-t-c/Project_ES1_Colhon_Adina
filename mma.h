@@ -3,6 +3,8 @@
 
 #include "mbed.h"
 
+#define UINT14_MAX        16383
+
 class MMAUnit {
 
 private:
